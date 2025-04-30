@@ -2,6 +2,9 @@
   "name": "@rigoonrails/eslint-config",
   "version": "1.0.0",
   "repository": "git+https://github.com/RigoOnRails/eslint-config.git",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "src/index.ts",
   "dependencies": {
     "@eslint/js": "^9.21.0",
