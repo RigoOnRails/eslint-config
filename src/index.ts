@@ -42,42 +42,55 @@ const base = tseslint.config(
   },
 );
 
-const react = tseslint.config(
-  {
-    extends: [base],
-    rules: {
-      ...reactPlugin.configs.recommended.rules,
-      ...reactPlugin.configs['jsx-runtime'].rules,
-      'react/function-component-definition': ['error', {
-        namedComponents: 'function-declaration',
-        unnamedComponents: 'arrow-function',
-      }],
-      'react/no-unescaped-entities': 'off',
+const react = (() => {
+  const reactBase = tseslint.config(
+    {
+      extends: [base],
+      rules: {
+        ...reactPlugin.configs.recommended.rules,
+        ...reactPlugin.configs['jsx-runtime'].rules,
+        'react/function-component-definition': ['error', {
+          namedComponents: 'function-declaration',
+          unnamedComponents: 'arrow-function',
+        }],
+        'react/no-unescaped-entities': 'off',
 
-      ...reactHooksPlugin.configs.recommended.rules,
-      'react-hooks/exhaustive-deps': ['error', { additionalHooks: '(useAsync|useUpdateEffect)' }],
+        ...reactHooksPlugin.configs.recommended.rules,
+        'react-hooks/exhaustive-deps': ['error', { additionalHooks: '(useAsync|useUpdateEffect)' }],
 
-      ...reactRefreshPlugin.configs.recommended.rules,
+        ...reactRefreshPlugin.configs.recommended.rules,
 
-      ...jsxA11yPlugin.configs.recommended.rules,
+        ...stylistic.configs['disable-legacy'].rules,
+        '@stylistic/jsx-one-expression-per-line': 'off',
+      },
+      languageOptions: {
+        parserOptions: reactPlugin.configs['jsx-runtime'].parserOptions,
+      },
+      settings: {
+        react: { version: 'detect' },
+      },
+    },
+    {
+      files: ['**/*.test.{ts,tsx}'],
+      rules: {
+        '@typescript-eslint/unbound-method': 'off',
+      },
+    },
+  );
 
-      ...stylistic.configs['disable-legacy'].rules,
-      '@stylistic/jsx-one-expression-per-line': 'off',
-    },
-    languageOptions: {
-      parserOptions: reactPlugin.configs['jsx-runtime'].parserOptions,
-    },
-    settings: {
-      react: { version: 'detect' },
-    },
-  },
-  {
-    files: ['**/*.test.{ts,tsx}'],
-    rules: {
-      '@typescript-eslint/unbound-method': 'off',
-    },
-  },
-);
+  return {
+    base: reactBase,
+    web: tseslint.config(
+      {
+        extends: [reactBase],
+        rules: {
+          ...jsxA11yPlugin.configs.recommended.rules,
+        },
+      },
+    ),
+    native: tseslint.config({ extends: [reactBase] }),
+  };
+})();
 
 export default {
   base,
