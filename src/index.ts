@@ -23,6 +23,7 @@ const base = tseslint.config(
       '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
       '@stylistic/max-statements-per-line': ['error', { max: 1, ignoredNodes: ['BreakStatement', 'ContinueStatement', 'ReturnStatement'] }],
       '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
+      '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/no-deprecated': 'error',
       '@typescript-eslint/no-unused-vars': ['error', {
         args: 'all',
