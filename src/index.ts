@@ -89,7 +89,7 @@ const react = (() => {
         },
       },
     ),
-    native: tseslint.config({ extends: [reactBase] }),
+    native: reactBase,
   };
 })();
 
