@@ -1,3 +1,4 @@
+import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import stylistic from '@stylistic/eslint-plugin';
@@ -7,7 +8,7 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 
-const base = tseslint.config(
+const base = defineConfig(
   {
     extends: [
       eslint.configs.recommended,
@@ -44,7 +45,7 @@ const base = tseslint.config(
 );
 
 const react = (() => {
-  const reactBase = tseslint.config(
+  const reactBase = defineConfig(
     {
       extends: [base],
       rules: {
@@ -81,7 +82,7 @@ const react = (() => {
 
   return {
     base: reactBase,
-    web: tseslint.config(
+    web: defineConfig(
       {
         extends: [reactBase],
         rules: {
