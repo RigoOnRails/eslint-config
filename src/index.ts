@@ -5,7 +5,7 @@ import stylistic from '@stylistic/eslint-plugin';
 
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
-import reactRefreshPlugin from 'eslint-plugin-react-refresh';
+import { reactRefresh as reactRefreshPlugin } from 'eslint-plugin-react-refresh';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 
 const base = defineConfig(
@@ -47,20 +47,22 @@ const base = defineConfig(
 const react = (() => {
   const reactBase = defineConfig(
     {
-      extends: [base],
+      extends: [
+        base,
+
+        reactPlugin.configs.flat.recommended,
+        reactPlugin.configs.flat['jsx-runtime'],
+        reactHooksPlugin.configs.flat.recommended,
+        reactRefreshPlugin.configs.recommended(),
+      ],
       rules: {
-        ...reactPlugin.configs.recommended.rules,
-        ...reactPlugin.configs['jsx-runtime'].rules,
         'react/function-component-definition': ['error', {
           namedComponents: 'function-declaration',
           unnamedComponents: 'arrow-function',
         }],
         'react/no-unescaped-entities': 'off',
 
-        ...reactHooksPlugin.configs.recommended.rules,
         'react-hooks/exhaustive-deps': ['error', { additionalHooks: '(useAsync|useUpdateEffect)' }],
-
-        ...reactRefreshPlugin.configs.recommended.rules,
 
         ...stylistic.configs['disable-legacy'].rules,
         '@stylistic/jsx-one-expression-per-line': 'off',
@@ -84,13 +86,13 @@ const react = (() => {
     base: reactBase,
     web: defineConfig(
       {
-        extends: [reactBase],
-        rules: {
-          ...jsxA11yPlugin.configs.recommended.rules,
-        },
+        extends: [
+          reactBase,
+
+          jsxA11yPlugin.flatConfigs.recommended,
+        ],
       },
     ),
-    native: reactBase,
   };
 })();
 
