@@ -67,9 +67,6 @@ const react = (() => {
         ...stylistic.configs['disable-legacy'].rules,
         '@stylistic/jsx-one-expression-per-line': 'off',
       },
-      languageOptions: {
-        parserOptions: reactPlugin.configs['jsx-runtime'].parserOptions,
-      },
       settings: {
         react: { version: 'detect' },
       },
