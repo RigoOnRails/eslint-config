@@ -22,6 +22,7 @@ const base = defineConfig(
     ],
     rules: {
       '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      '@stylistic/jsx-one-expression-per-line': 'off',
       '@stylistic/max-statements-per-line': ['error', { max: 1, ignoredNodes: ['BreakStatement', 'ContinueStatement', 'ReturnStatement'] }],
       '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
       '@typescript-eslint/consistent-type-imports': 'error',
@@ -65,7 +66,6 @@ const react = (() => {
         'react-hooks/exhaustive-deps': ['error', { additionalHooks: '(useAsync|useUpdateEffect)' }],
 
         ...stylistic.configs['disable-legacy'].rules,
-        '@stylistic/jsx-one-expression-per-line': 'off',
       },
       settings: {
         react: { version: 'detect' },
